@@ -1,0 +1,13 @@
+/images
+/Experiments/*.txt
+/Matlab Code/calibration
+*.ply
+/Experiments/result
+/Experiments/traj
+codegen
+/EXP_Record
+*.zip
+Experiments/MeasurePoseGen/Qs_Measure.txt
+Experiments/MeasurePoseGen/Qs_Validation.txt
+Experiments/Ts.mat
+.vscode/
