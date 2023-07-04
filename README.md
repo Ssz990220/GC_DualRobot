@@ -51,7 +51,7 @@ Result in a measurement experiment. The proposed GA-based method reached identic
 The proposed method solves the problem ~4.5x faster with ~3.5x less computational load than SOTA.
 
 ## Benchmark
-Read Benchmark.md for detailed benchmark.
+Read [Benchmark.md](https://github.com/Ssz990220/GC_DualRobot/blob/master/Benchmark.md) for detailed benchmark.
 
 ## Related Methods
 * Wang's method (previous SOTA): [Simultaneous calibration of multicoordinates for a dual-robot system by solving the AXB = YCZ problem](https://ieeexplore.ieee.org/document/7425217)
