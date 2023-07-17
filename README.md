@@ -1,5 +1,5 @@
 # GA_MultiRobot
-Calibrate Multi Robot with Geometric Algebra (GA) and Geometric Calculus (GC). More specifically the $\mathbf{AXB=YCZ}$ problem.
+Calibrate Multi-Robot with Geometric Algebra (GA) and Geometric Calculus (GC). More specifically the $\mathbf{AXB=YCZ}$ problem.
 
 ## Problem Formulation
 ![](./Assets/AXB%3DYCZ.svg)
@@ -24,7 +24,7 @@ You need to install `Julia` and `Matlab` ahead to run this package. We recommend
 ```julia
 julia> ]
 (@v1.8) pkg> activate .
-(GA_MultiRobot) pkg> instantiate      # this may take long depends on your network condition
+(GA_MultiRobot) pkg> instantiate      # This may take long depending on your network condition
 ```
 
 ## Demo
@@ -32,7 +32,7 @@ Run the demo with the following command:
 ```
 julia --project=. -O3 demo.jl
 ```
-It may took a while for plotting, which is a known issue for julia and will be fixed in v1.9.x.
+It may take a while for plotting, which is a known issue for Julia and will be fixed in v1.9.x.
 
 The result will be saved at `./image/demo.svg`. Noted that the result marked by "GA" is the unpublished version of the proposed method, which is based on Projective Geometric Algebra (PGA). The published version is based on $\mathbb{G}^3$, which is (definitely) more efficient and (probably) more accurate.
 ![Image](./Assets/demo.svg)
