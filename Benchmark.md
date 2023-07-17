@@ -1,6 +1,6 @@
 # Benchmark
 ## Prepare files
-The point cloud data are so sparse but space inefficient. We therefore compress all data points in a .zip file. You can access the zip file in [this link](https://drive.google.com/file/d/16gfghmFZo5l-FiQKHwCbR91Cqu0tEDsf/view?usp=sharing). Unzip the file at `./Experiments/meshes`. Make sure the point clouds are located at `./Experiments/meshes/Validation_New/balls/*.ply`.
+The point cloud data are so sparse but space inefficient. We therefore compress all data points in a .zip file. You can access the zip file in [this link](https://drive.google.com/file/d/1KBOPB5leS9vUCu4oeyLxHO-R50ZSIwa4/view?usp=sharing). Unzip the file at `./Experiments/`. Make sure the point clouds are located at `./Experiments/meshes/Validation_New/balls/*.ply`, trajectories are located at `./Experiment/traj/...`, and results are located at `./Experiments/result/...`.
 
 ## Reproduce results in the paper
 ### Fig. 4-6

@@ -63,6 +63,6 @@ Read [Benchmark.md](https://github.com/Ssz990220/GC_DualRobot/blob/master/Benchm
 ## TODO
 
 - [x] Upload Simulation Benchmark Code
-- [ ] Upload Experiment Data & Benchmark Code
+- [x] Upload Experiment Data & Benchmark Code
 - [ ] Upload Experiment Video
 - [ ] Port project to C++ for better usability and efficiency
