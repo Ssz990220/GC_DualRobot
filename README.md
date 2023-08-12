@@ -60,6 +60,19 @@ Read [Benchmark.md](https://github.com/Ssz990220/GC_DualRobot/blob/master/Benchm
 * Ma's Method (temporal info free): [Probabilistic approaches to the AXB= YCZ calibration problem in multi-robot systems](https://link.springer.com/article/10.1007/s10514-018-9744-3)
 * Bayro's AX=XB Method: [Motor algebra for 3D kinematics: the case of the hand-eye calibration](https://link.springer.com/article/10.1023/A:1026567812984)
 
+
+## Cite this work
+```
+@ARTICLE{10215071,
+  author={Sui, Sizhe and Ding, Ye},
+  journal={IEEE Transactions on Automation Science and Engineering}, 
+  title={Solving the AXB=YCZ Problem for a Dual-Robot System With Geometric Calculus}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-19},
+  doi={10.1109/TASE.2023.3299969}}
+```
 ## TODO
 
 - [x] Upload Simulation Benchmark Code
