@@ -34,8 +34,9 @@ julia --project=. -O3 demo.jl
 ```
 It may take a while for plotting, which is a known issue for Julia and will be fixed in v1.9.x.
 
-The result will be saved at `./image/demo.svg`. Noted that the result marked by "GA" is the unpublished version of the proposed method, which is based on Projective Geometric Algebra (PGA). The published version is based on $\mathbb{G}^3$, which is (definitely) more efficient and (probably) more accurate.
-![Image](./Assets/demo.svg)
+The result will be saved at `./Assets/demo.svg`. Noted that the result marked by "GA" is the unpublished version of the proposed method, which is based on Projective Geometric Algebra (PGA). The published version is based on $\mathbb{G}^3$, which is (definitely) more efficient and (probably) more accurate.
+
+![](./Assets/demo.svg)
 ## Highlights
 
 ### High accuracy
