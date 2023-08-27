@@ -74,6 +74,7 @@ Read [Benchmark.md](https://github.com/Ssz990220/GC_DualRobot/blob/master/Benchm
   pages={1-19},
   doi={10.1109/TASE.2023.3299969}}
 ```
+An open-sourced version of this article can be found on the [Author's Researchgate](https://www.researchgate.net/publication/373364683_Solving_the_AXBYCZ_Problem_for_a_Dual-Robot_System_With_Geometric_Calculus).
 ## TODO
 
 - [x] Upload Simulation Benchmark Code
