@@ -467,6 +467,110 @@ function FourFoldCrossCheck(Data,DataMa,DataAXXBAll,NMa,N_CrossCheck)
 	return eWs, eWts, eWus, eWuts, eFus, eFuts, eG3s, eG3ts, eMas, eMats, eGAs, eGAts
 end
 
+# ╔═╡ 115b8629-6f0d-4087-85cf-b79935688594
+eWs, eWts, eWus, eWuts, eFus, eFuts, eG3s, eG3ts, eMas, eMats, eGAs, eGAts =
+	FourFoldCrossCheck([Ass,Bss,Css,Aₛ,Bₛ,Cₛ],
+						[DataMa[5:7]...],
+						[DataAXXB[5:7]...],
+						NN,N_CrossCheck)
+
+# ╔═╡ 52bfee17-971e-44a4-8a4f-a31e076f75ba
+begin
+	NFold = 4; sizeTestSet = 60;
+	failedMaskMa = eMas.<5e-2 .&& eMats .< 2e-2
+	eMas_ = eMas[failedMaskMa]; eMats_ = eMats[failedMaskMa]
+	@printf "%d out of %d trials of Ma failed" N_CrossCheck*NFold*sizeTestSet - sum(failedMaskMa) N_CrossCheck*NFold*sizeTestSet
+	terrᵣ₁,terrₜ₁,terrᵣ₄,terrₜ₄,terrᵣ₅,terrₜ₅,terrᵣ₃,terrₜ₃,terrᵣ₆,terrₜ₆ = eWs, eWts, eWus, eWuts, eFus, eFuts, eG3s, eG3ts, eMas_, eMats_
+end
+
+# ╔═╡ 5a0a2a3d-06d2-4822-8258-3bb395c02cc9
+begin
+	ppW = pvalue(UnequalVarianceTTest(terrᵣ₃,terrᵣ₁),tail=:left)
+	ppWu = pvalue(UnequalVarianceTTest(terrᵣ₃,terrᵣ₄),tail=:left)
+	ppF = pvalue(UnequalVarianceTTest(terrᵣ₃,terrᵣ₅),tail=:left)
+	ppM = pvalue(UnequalVarianceTTest(terrᵣ₃,terrᵣ₆),tail=:left)
+	@printf "The result of left-tailed paired samples t-test on rotational result between\n proposed method and Wang's method: p=%f\n proposed method and Wu's method: p=%f\n proposed method and Fu's method: p=%f\n proposed method and Ma's method: p=%f" ppW ppWu ppF ppM
+end
+
+# ╔═╡ 69c5e372-785c-4161-8912-12f6e2e9f000
+begin
+	ppWt = pvalue(UnequalVarianceTTest(terrₜ₃,terrₜ₁),tail=:left)
+	ppWut = pvalue(UnequalVarianceTTest(terrₜ₃,terrₜ₄),tail=:left)
+	ppFt = pvalue(UnequalVarianceTTest(terrₜ₃,terrₜ₅),tail=:left)
+	ppMt = pvalue(UnequalVarianceTTest(terrₜ₃,terrₜ₆),tail=:left)
+	@printf "The result of left-tailed paired samples t-test on rotational result between\n proposed method and Wang's method: p=%f\n proposed method and Wu's method: p=%f\n proposed method and Fu's method: p=%f\n proposed method and Ma's method: p=%f" ppWt ppWut ppFt ppMt
+end
+
+# ╔═╡ 3b70d227-4b33-4b86-8531-b8d985e0ab47
+begin
+	if displayGA
+	l = @layout [a b];
+	colors = [RGB(182/255, 35/255, 48/255) RGB(109/255, 174/255, 209/255) RGB(17/255, 70/255, 127/255) RGB(182/255, 35/255, 48/255) RGB(245/255, 201/255, 91/255)]
+	p1 = boxplot(["Proposed" "Wang" "Wu" "PGA" "Fu"],[terrᵣ₃ terrᵣ₁ terrᵣ₄ eGAs terrᵣ₅].*1e3, leg=false, ylabel="Rotation Err / 10^{-3} Rad", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2, outliers=false);
+ 	boxplot!(["Ma"], terrᵣ₆*1e3, linewidth=2, color = RGB(248/255, 178/255, 147/255), outliers=false)
+	if UNIT == "m"
+		p2 = boxplot(["Proposed" "Wang" "Wu" "PGA" "Fu"],[terrₜ₃ terrₜ₁ terrₜ₄ eGAts terrₜ₅].*1e3, leg=false, ylabel="Translation Err / mm", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2,outliers=false)
+ 		boxplot!(["Ma"], terrₜ₆*1e3, linewidth=2, color = RGB(248/255, 178/255, 147/255),outliers=false)
+	else
+		p2 = boxplot(["Proposed" "Wang" "Wu" "PGA" "Fu"],[terrₜ₃ terrₜ₁ terrₜ₄ eGAts terrₜ₅], leg=false, ylabel="Translation Err / mm", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2,outliers=false)
+		boxplot!(["Ma"], terrₜ₆,linewidth=2, color = RGB(248/255, 178/255, 147/255),outliers=false)
+	end
+	plot(p1,p2, layout = l,size=(600,250))
+	mkpath(string("../images/","PaperV2"))
+	savefig(string("../images/","PaperV2","/","CrossCheckRealData",".svg"))
+	plot!()		# TO SHOW THE PLOT
+	else
+	l = @layout [a b];
+	colors = [RGB(182/255, 35/255, 48/255) RGB(109/255, 174/255, 209/255) RGB(17/255, 70/255, 127/255) RGB(245/255, 201/255, 91/255)]
+	p1 = boxplot(["Proposed" "Wang" "Wu" "Fu"],[terrᵣ₃ terrᵣ₁ terrᵣ₄ terrᵣ₅].*1e3, leg=false, ylabel="Rotation Err / 10^{-3} Rad", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2, outliers=false);
+ 	boxplot!(["Ma"], terrᵣ₆*1e3, linewidth=2, color = RGB(248/255, 178/255, 147/255), outliers=false)
+	if UNIT == "m"
+		p2 = boxplot(["Proposed" "Wang" "Wu" "Fu"],[terrₜ₃ terrₜ₁ terrₜ₄ terrₜ₅].*1e3, leg=false, ylabel="Translation Err / mm", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2,outliers=false)
+ 		boxplot!(["Ma"], terrₜ₆*1e3, linewidth=2, color = RGB(248/255, 178/255, 147/255),outliers=false)
+	else
+		p2 = boxplot(["Proposed" "Wang" "Wu" "Fu"],[terrₜ₃ terrₜ₁ terrₜ₄ terrₜ₅], leg=false, ylabel="Translation Err / mm", color =colors,guidefont = (14,"times"), tickfont = (8,"times"), lw=2,outliers=false)
+		boxplot!(["Ma"], terrₜ₆,linewidth=2, color = RGB(248/255, 178/255, 147/255),outliers=false)
+	end
+	plot(p1,p2, layout = l,size=(800,250))
+	mkpath(string("../images/","PaperV2"))
+	savefig(string("../images/","PaperV2","/","CrossCheckRealData",".svg"))
+	plot!()		# TO SHOW THE PLOT
+	end
+end
+
+# ╔═╡ 25654718-2619-42f3-a8aa-3abac062c5e8
+begin
+	mW = Statistics.mean(terrᵣ₁); mWt = Statistics.mean(terrₜ₁);
+	mWu = Statistics.mean(terrᵣ₄); mWut = Statistics.mean(terrₜ₄);
+	mFu = Statistics.mean(terrᵣ₅); mFut = Statistics.mean(terrₜ₅);
+	mMa = Statistics.mean(terrᵣ₆); mMat = Statistics.mean(terrₜ₆);
+	mG3 = Statistics.mean(terrᵣ₃); mG3t = Statistics.mean(terrₜ₃);
+	mGA = Statistics.mean(eGAs[eGAts.<thresholdGA]); mGAt = Statistics.mean(eGAts[eGAts.<thresholdGA]);
+	
+	vW = Statistics.std(terrᵣ₁); vWt = Statistics.std(terrₜ₁);
+	vWu = Statistics.std(terrᵣ₄); vWut = Statistics.std(terrₜ₄);
+	vFu = Statistics.std(terrᵣ₅); vFut = Statistics.std(terrₜ₅);
+	vMa = Statistics.std(terrᵣ₆); vMat = Statistics.std(terrₜ₆);
+	vG3 = Statistics.std(terrᵣ₃); vG3t = Statistics.std(terrₜ₃);
+	vGA = Statistics.std(eGAs[eGAts.<thresholdGA]); vGAt = Statistics.std(eGAts[eGAts.<thresholdGA]);
+	
+	@printf "The mean rotation error (rad) of all algorithms under cross check:
+	Wang's method: \tmean = %1.8f\t var = %1.8f
+	Wu's method: \tmean = %1.8f\t var = %1.8f
+	G3's method: \tmean = %1.8f\t var = %1.8f
+	Fu's method: \tmean = %1.8f\t var = %1.8f
+	Ma's method: \tmean = %1.8f\t var = %1.8f
+	GA's method: \tmean = %1.8f\t var = %1.8f\n\n" mW vW mWu vWu mG3 vG3 mFu vFu mMa vMa mGA vGA
+	
+	@printf "The mean translation error (mm) of all algorithms under cross check:
+	Wang's method: \tmean = %1.8f\t var = %1.8f
+	Wu's method: \tmean = %1.8f\t var = %1.8f
+	G3's method: \tmean = %1.8f\t var = %1.8f
+	Fu's method: \tmean = %1.8f\t var = %1.8f
+	Ma's method: \tmean = %1.8f\t var = %1.8f
+	GA's method: \tmean = %1.8f\t var = %1.8f" mWt vWt mWut vWut mG3t vG3t mFut vFut mMat vMat mGAt vGAt
+end
+
 # ╔═╡ 3fa29a27-3abb-4097-a539-296e5b0f3127
 md"# Import Packages"
 
@@ -485,17 +589,17 @@ md"# Import Packages"
 # ╟─c08040e8-df14-4cb2-af0c-207ae85b1c52
 # ╟─b05de384-cd1f-4b43-89c9-c7d501582f50
 # ╠═f1015ab1-23b7-43ce-bc0f-60ce068bc615
-# ╟─61b42980-f0d1-4687-9a76-2f64ea0fd78c
+# ╠═61b42980-f0d1-4687-9a76-2f64ea0fd78c
 # ╟─f3878dfc-2b49-42d7-91ed-14f77319033e
-# ╠═46c79cc2-9a9d-4665-a136-2113720e3a58
-# ╠═fc258ba9-e2ad-45de-9bb1-ccc03907137e
+# ╠═115b8629-6f0d-4087-85cf-b79935688594
+# ╠═52bfee17-971e-44a4-8a4f-a31e076f75ba
+# ╠═3b70d227-4b33-4b86-8531-b8d985e0ab47
 # ╟─ae16cffc-e369-473f-b2b5-9bf1d4ff4d81
 # ╟─55e8a4dc-5ecf-47fb-9751-5a7e3882d16c
-# ╠═db42db8f-b52b-4853-a4f4-1dd478074397
-# ╟─6068c8cd-9d80-488b-b339-7beb0788bd03
-# ╟─078410c5-9e1e-4980-a363-dc591474708c
 # ╠═78938e52-22c1-4910-91dc-8616c9a51240
-# ╠═f23fdff3-0eb0-4361-a303-894a6ff3b0d1
+# ╠═5a0a2a3d-06d2-4822-8258-3bb395c02cc9
+# ╠═69c5e372-785c-4161-8912-12f6e2e9f000
+# ╠═25654718-2619-42f3-a8aa-3abac062c5e8
 # ╟─c1bd5255-02ee-449e-a1e4-e235533a7994
 # ╠═42ddfa21-d01f-4102-8b7e-c041207378d4
 # ╠═884f3c97-a20f-4110-b3d9-0f41f50a59d9
