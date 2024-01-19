@@ -17,7 +17,7 @@ As an updated version of hand-eye calibration, $\mathbf{AXB=YCZ}$ aims at solvin
 Each folder has its own README.md for detailed illustration.
 
 ## Installation:
-You need to install `Julia` and `Matlab` ahead to run this package. We recommend `julia>1.8.1 < 1.9` and `MATLAB>2022b` for best performance and visualization.
+You need to install `Julia` and `Matlab` ahead to run this package. We recommend `julia>1.9.2` and `MATLAB>2022b` for best performance and visualization.
 1. You need to enter the folder in your terminal by `cd GA_MultiRobot` (or whatever you name the folder)
 2. `dir` (windows) or `ls` (linux), and you should see all folder names and `Project.toml`, `Manifest.toml`
 3. Activate and setup the project environment for `julia`
